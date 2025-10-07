@@ -1,0 +1,777 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>نحو أهدافنا - متتبع الإنجازات الشخصية</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #000000;
+            --secondary: #006272;
+            --accent: #ffce54;
+            --success: #2ecc71;
+            --danger: #e74c3c;
+            --dark: #2c3e50;
+            --light: #f8f9fa;
+            --gray: #6c757d;
+        }
+        
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        
+        body {
+            font-family: 'Cairo', sans-serif;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            color: #333;
+            line-height: 1.6;
+            min-height: 100vh;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+            overflow: hidden;
+            margin: 20px 0;
+        }
+        
+        header {
+            background: linear-gradient(to right, var(--primary), var(--secondary));
+            color: white;
+            padding: 25px;
+            text-align: center;
+            border-bottom: 5px solid var(--accent);
+            position: relative;
+        }
+        
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+        }
+        
+         #zoz{
+            color:#006272;
+         }
+        
+        .subtitle {
+            font-size: 1.2rem;
+            opacity: 0.9;
+        }
+        
+        .main-content {
+            display: flex;
+            flex-wrap: wrap;
+            padding: 20px;
+        }
+        
+        .goal-form {
+            flex: 1;
+            min-width: 300px;
+            padding: 20px;
+            background: var(--light);
+            border-radius: 15px;
+            margin: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        .goals-list {
+            flex: 2;
+            min-width: 300px;
+            padding: 20px;
+            margin: 10px;
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: var(--dark);
+        }
+        
+        input, select, textarea {
+            width: 100%;
+            padding: 12px 15px;
+            border: 2px solid #ddd;
+            border-radius: 10px;
+            font-family: 'Cairo', sans-serif;
+            font-size: 1rem;
+            transition: border-color 0.3s;
+        }
+        
+        input:focus, select:focus, textarea:focus {
+            border-color: var(--primary);
+            outline: none;
+        }
+        
+        button {
+            background: linear-gradient(to right, var(--primary), var(--secondary));
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 10px;
+            cursor: pointer;
+            font-family: 'Cairo', sans-serif;
+            font-size: 1.1rem;
+            font-weight: 600;
+            transition: transform 0.3s, box-shadow 0.3s;
+            display: block;
+            width: 100%;
+        }
+        
+        button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+        
+        .btn-sm {
+            padding: 8px 15px;
+            font-size: 0.9rem;
+            width: auto;
+        }
+        
+        .goal-card {
+            background: white;
+            border-radius: 15px;
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            border-left: 5px solid var(--primary);
+            transition: transform 0.3s;
+        }
+        
+        .goal-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .goal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+            border-bottom: 2px dashed #eee;
+            padding-bottom: 10px;
+        }
+        
+        .goal-title {
+            font-size: 1.4rem;
+            color: var(--primary);
+            font-weight: 700;
+        }
+        
+        .goal-date {
+            color: var(--gray);
+            font-size: 0.9rem;
+        }
+        
+        .goal-progress {
+            background: #f1f1f1;
+            border-radius: 10px;
+            height: 20px;
+            margin: 15px 0;
+            overflow: hidden;
+        }
+        
+        .progress-bar {
+            height: 100%;
+            background: linear-gradient(to right, var(--accent), #ffa647);
+            border-radius: 10px;
+            text-align: center;
+            color: white;
+            font-weight: bold;
+            line-height: 20px;
+            font-size: 0.8rem;
+            transition: width 0.5s;
+        }
+        
+        .goal-details {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 15px;
+            margin: 15px 0;
+        }
+        
+        .detail-item {
+            background: var(--light);
+            padding: 10px;
+            border-radius: 10px;
+            text-align: center;
+        }
+        
+        .detail-value {
+            font-weight: 700;
+            font-size: 1.2rem;
+            color: var(--primary);
+        }
+        
+        .detail-label {
+            font-size: 0.9rem;
+            color: var(--gray);
+        }
+        
+        .transactions {
+            margin-top: 15px;
+        }
+        
+        .transaction {
+            display: flex;
+            justify-content: space-between;
+            padding: 10px;
+            border-bottom: 1px solid #eee;
+            align-items: center;
+        }
+        
+        .transaction-info {
+            flex: 1;
+        }
+        
+        .transaction-desc {
+            font-weight: 600;
+        }
+        
+        .transaction-date {
+            color: var(--gray);
+            font-size: 0.9rem;
+        }
+        
+        .transaction-amount {
+            font-weight: 700;
+            margin: 0 10px;
+        }
+        
+        .transaction-actions {
+            display: flex;
+            gap: 5px;
+        }
+        
+        .positive {
+            color: var(--success);
+        }
+        
+        .negative {
+            color: var(--danger);
+        }
+        
+        .summary {
+            background: linear-gradient(to right, var(--primary), var(--secondary));
+            color: white;
+            padding: 20px;
+            border-radius: 15px;
+            margin-top: 20px;
+            text-align: center;
+        }
+        
+        .summary h2 {
+            margin-bottom: 15px;
+        }
+        
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+        }
+        
+        .stat-item {
+            background: rgba(255, 255, 255, 0.2);
+            padding: 15px;
+            border-radius: 10px;
+        }
+        
+        .stat-value {
+            font-size: 1.8rem;
+            font-weight: 700;
+            margin: 10px 0;
+        }
+        
+        .empty-state {
+            text-align: center;
+            padding: 40px 20px;
+            color: var(--gray);
+        }
+        
+        .empty-state i {
+            font-size: 4rem;
+            margin-bottom: 20px;
+            color: #ddd;
+        }
+        
+        .empty-state p {
+            font-size: 1.2rem;
+            margin-bottom: 20px;
+        }
+        
+        .tabs {
+            display: flex;
+            margin-bottom: 20px;
+            border-bottom: 2px solid #eee;
+        }
+        
+        .tab {
+            padding: 10px 20px;
+            cursor: pointer;
+            font-weight: 600;
+            color: var(--gray);
+            border-bottom: 3px solid transparent;
+            transition: all 0.3s;
+        }
+        
+        .tab.active {
+            color: var(--primary);
+            border-bottom: 3px solid var(--primary);
+        }
+        
+        .tab-content {
+            display: none;
+        }
+        
+        .tab-content.active {
+            display: block;
+        }
+        
+        footer {
+            text-align: center;
+            padding: 20px;
+            color: white;
+            margin-top: auto;
+        }
+        
+        @media (max-width: 768px) {
+            .main-content {
+                flex-direction: column;
+            }
+            
+            h1 {
+                font-size: 2rem;
+            }
+            
+            .goal-header {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            
+            .goal-date {
+                margin-top: 5px;
+            }
+        }
+            #ZOZ1{
+              color: #000000;
+            }
+        
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+           <h1>نحو أهدافنا<h1>
+           <h2 id="zoz">Mazen</h2>
+            <p class="subtitle">حقق أهدافك وخطط لمستقبلك معنا</p>
+        </header>
+        
+        <div class="main-content">
+            <div class="goal-form">
+                <div class="tabs">
+                    <div class="tab active" data-tab="add-goal">إضافة هدف</div>
+                    <div class="tab" data-tab="add-progress">إضافة تقدم</div>
+                </div>
+                
+                <div class="tab-content active" id="add-goal">
+                    <h2>أضف هدف جديد</h2>
+                    <form id="goalForm">
+                        <div class="form-group">
+                            <label for="goalName">اسم الهدف</label>
+                            <input type="text" id="goalName" placeholder="مثال: توفير لشراء لابتوب" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="goalType">نوع الهدف</label>
+                            <select id="goalType" required>
+                                <option value="مالي">مالي</option>
+                                <option value="دراسي">دراسي</option>
+                                <option value="عملي">عملي</option>
+                                <option value="صحي">صحي</option>
+                                <option value="أخرى">أخرى</option>
+                            </select>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="targetAmount">المبلغ/العدد المستهدف</label>
+                            <input type="number" id="targetAmount" placeholder="مثال: 10000" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="initialAmount">القيمة الحالية (إن وجدت)</label>
+                            <input type="number" id="initialAmount" placeholder="مثال: 2000" value="0">
+                        </div>
+                        
+                        <button type="submit">إضافة الهدف <i class="fas fa-plus"></i></button>
+                    </form>
+                </div>
+                
+                <div class="tab-content" id="add-progress">
+                    <h2>إضافة تقدم للهدف</h2>
+                    <form id="progressForm">
+                        <div class="form-group">
+                            <label for="goalSelect">اختر الهدف</label>
+                            <select id="goalSelect" required>
+                                <option value="">-- اختر الهدف --</option>
+                            </select>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="progressType">نوع التقدم</label>
+                            <select id="progressType" required>
+                                <option value="إضافة">إضافة (مكسب/إنجاز)</option>
+                                <option value="خصم">خصم (إنفاق/التزام)</option>
+                            </select>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="amount">المبلغ/العدد</label>
+                            <input type="number" id="amount" placeholder="قيمة التقدم" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="description">وصف التقدم</label>
+                            <input type="text" id="description" placeholder="مثال: راتب الشهر" required>
+                        </div>
+                        
+                        <button type="submit">تسجيل التقدم <i class="fas fa-arrow-up"></i></button>
+                    </form>
+                </div>
+            </div>
+            
+            <div class="goals-list">
+                <h2>أهدافك الحالية</h2>
+                <div id="goalsContainer">
+                    <!-- سيتم ملء الأهداف هنا بواسطة JavaScript -->
+                </div>
+            </div>
+        </div>
+        
+        <div class="summary">
+            <h2>ملخص تقدمك</h2>
+            <div class="stats">
+                <div class="stat-item">
+                    <div class="stat-label">عدد الأهداف</div>
+                    <div class="stat-value" id="totalGoals">0</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-label">أهداف مكتملة</div>
+                    <div class="stat-value" id="completedGoals">0</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-label">متوسط الإنجاز</div>
+                    <div class="stat-value" id="averageProgress">0%</div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <footer>
+      <h4 id="ZOZ1">Mazen</h4>
+        <p>نحو أهدافنا - كل الحقوق محفوظة 2025</p>
+    </footer>
+
+    <script>
+        // فئة الهدف
+        class Goal {
+            constructor(id, name, type, target, current = 0, startDate = new Date(), transactions = []) {
+                this.id = id;
+                this.name = name;
+                this.type = type;
+                this.target = target;
+                this.current = current;
+                this.startDate = startDate;
+                this.transactions = transactions;
+            }
+            
+            addTransaction(type, amount, description) {
+                const transaction = {
+                    type,
+                    amount,
+                    description,
+                    date: new Date()
+                };
+                
+                if (type === "إضافة") {
+                    this.current += amount;
+                } else if (type === "خصم") {
+                    this.current -= amount;
+                }
+                
+                this.transactions.push(transaction);
+                return transaction;
+            }
+            
+            getProgress() {
+                return (this.current / this.target) * 100;
+            }
+            
+            getRemaining() {
+                return this.target - this.current;
+            }
+        }
+
+        // تطبيق إدارة الأهداف
+        const GoalsApp = {
+            goals: [],
+            
+            init() {
+                this.loadGoals();
+                this.setupEventListeners();
+                this.updateUI();
+            },
+            
+            setupEventListeners() {
+                // إضافة هدف جديد
+                document.getElementById('goalForm').addEventListener('submit', (e) => {
+                    e.preventDefault();
+                    this.addGoal();
+                });
+                
+                // إضافة تقدم للهدف
+                document.getElementById('progressForm').addEventListener('submit', (e) => {
+                    e.preventDefault();
+                    this.addProgress();
+                });
+                
+                // تبديل التبويبات
+                document.querySelectorAll('.tab').forEach(tab => {
+                    tab.addEventListener('click', () => {
+                        document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+                        document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+                        
+                        tab.classList.add('active');
+                        document.getElementById(tab.dataset.tab).classList.add('active');
+                    });
+                });
+            },
+            
+            addGoal() {
+                const name = document.getElementById('goalName').value;
+                const type = document.getElementById('goalType').value;
+                const target = parseFloat(document.getElementById('targetAmount').value);
+                const current = parseFloat(document.getElementById('initialAmount').value) || 0;
+                
+                const id = Date.now().toString();
+                const goal = new Goal(id, name, type, target, current);
+                
+                this.goals.push(goal);
+                this.saveGoals();
+                this.updateUI();
+                
+                document.getElementById('goalForm').reset();
+                
+                alert('تم إضافة الهدف بنجاح!');
+            },
+            
+            addProgress() {
+                const goalId = document.getElementById('goalSelect').value;
+                const type = document.getElementById('progressType').value;
+                const amount = parseFloat(document.getElementById('amount').value);
+                const description = document.getElementById('description').value;
+                
+                if (!goalId) {
+                    alert('يرجى اختيار هدف');
+                    return;
+                }
+                
+                const goal = this.goals.find(g => g.id === goalId);
+                if (!goal) {
+                    alert('الهدف غير موجود');
+                    return;
+                }
+                
+                goal.addTransaction(type, amount, description);
+                this.saveGoals();
+                this.updateUI();
+                
+                document.getElementById('progressForm').reset();
+                
+                alert('تم تسجيل التقدم بنجاح!');
+            },
+            
+            deleteGoal(goalId) {
+                if (confirm('هل أنت متأكد من حذف هذا الهدف؟')) {
+                    this.goals = this.goals.filter(goal => goal.id !== goalId);
+                    this.saveGoals();
+                    this.updateUI();
+                }
+            },
+            
+            deleteTransaction(goalId, transactionIndex) {
+                if (confirm('هل أنت متأكد من حذف هذه المعاملة؟')) {
+                    const goal = this.goals.find(g => g.id === goalId);
+                    if (goal) {
+                        const transaction = goal.transactions[transactionIndex];
+                        
+                        // التراجع عن تأثير المعاملة
+                        if (transaction.type === "إضافة") {
+                            goal.current -= transaction.amount;
+                        } else if (transaction.type === "خصم") {
+                            goal.current += transaction.amount;
+                        }
+                        
+                        goal.transactions.splice(transactionIndex, 1);
+                        this.saveGoals();
+                        this.updateUI();
+                    }
+                }
+            },
+            
+            saveGoals() {
+                localStorage.setItem('goals', JSON.stringify(this.goals));
+            },
+            
+            loadGoals() {
+                const savedGoals = localStorage.getItem('goals');
+                if (savedGoals) {
+                    const goalsData = JSON.parse(savedGoals);
+                    this.goals = goalsData.map(data => {
+                        const goal = new Goal(
+                            data.id,
+                            data.name,
+                            data.type,
+                            data.target,
+                            data.current,
+                            new Date(data.startDate),
+                            data.transactions
+                        );
+                        return goal;
+                    });
+                }
+            },
+            
+            updateUI() {
+                this.updateGoalsList();
+                this.updateGoalSelect();
+                this.updateSummary();
+            },
+            
+            updateGoalsList() {
+                const container = document.getElementById('goalsContainer');
+                
+                if (this.goals.length === 0) {
+                    container.innerHTML = `
+                        <div class="empty-state">
+                            <i class="fas fa-bullseye"></i>
+                            <p>لا توجد أهداف حتى الآن</p>
+                            <p>ابدأ بإضافة هدف جديد لترى تقدمك هنا</p>
+                        </div>
+                    `;
+                    return;
+                }
+                
+                container.innerHTML = this.goals.map(goal => {
+                    const progress = goal.getProgress();
+                    const remaining = goal.getRemaining();
+                    const progressWidth = Math.min(progress, 100);
+                    
+                    return `
+                        <div class="goal-card">
+                            <div class="goal-header">
+                                <h3 class="goal-title">${goal.name} <span style="font-size: 0.8rem; color: var(--gray);">(${goal.type})</span></h3>
+                                <div>
+                                    <span class="goal-date">بدأ في: ${new Date(goal.startDate).toLocaleDateString('ar-EG')}</span>
+                                    <button class="btn-sm" onclick="GoalsApp.deleteGoal('${goal.id}')" style="margin-right: 10px; background: var(--danger);">
+                                        <i class="fas fa-trash"></i>
+                                    </button>
+                                </div>
+                            </div>
+                            
+                            <div class="goal-progress">
+                                <div class="progress-bar" style="width: ${progressWidth}%;">${progress.toFixed(1)}%</div>
+                            </div>
+                            
+                            <div class="goal-details">
+                                <div class="detail-item">
+                                    <div class="detail-value">${goal.target.toLocaleString()}</div>
+                                    <div class="detail-label">الهدف الكلي</div>
+                                </div>
+                                <div class="detail-item">
+                                    <div class="detail-value">${goal.current.toLocaleString()}</div>
+                                    <div class="detail-label">المحقق</div>
+                                </div>
+                                <div class="detail-item">
+                                    <div class="detail-value">${remaining.toLocaleString()}</div>
+                                    <div class="detail-label">المتبقي</div>
+                                </div>
+                            </div>
+                            
+                            <div class="transactions">
+                                <h4>التسجيلات الأخيرة:</h4>
+                                ${goal.transactions.length > 0 ? 
+                                    goal.transactions.slice().reverse().map((transaction, index) => `
+                                        <div class="transaction">
+                                            <div class="transaction-info">
+                                                <div class="transaction-desc">${transaction.description}</div>
+                                                <div class="transaction-date">${new Date(transaction.date).toLocaleString('ar-EG')}</div>
+                                            </div>
+                                            <div class="transaction-amount ${transaction.type === 'إضافة' ? 'positive' : 'negative'}">
+                                                ${transaction.type === 'إضافة' ? '+' : '-'}${transaction.amount.toLocaleString()}
+                                            </div>
+                                            <div class="transaction-actions">
+                                                <button class="btn-sm" style="background: var(--danger); padding: 5px 10px;" onclick="GoalsApp.deleteTransaction('${goal.id}', ${goal.transactions.length - 1 - index})">
+                                                    <i class="fas fa-times"></i>
+                                                </button>
+                                            </div>
+                                        </div>
+                                    `).join('') : 
+                                    '<p>لا توجد معاملات حتى الآن</p>'
+                                }
+                            </div>
+                        </div>
+                    `;
+                }).join('');
+            },
+            
+            updateGoalSelect() {
+                const select = document.getElementById('goalSelect');
+                select.innerHTML = '<option value="">-- اختر الهدف --</option>';
+                
+                this.goals.forEach(goal => {
+                    const option = document.createElement('option');
+                    option.value = goal.id;
+                    option.textContent = goal.name;
+                    select.appendChild(option);
+                });
+            },
+            
+            updateSummary() {
+                const totalGoals = this.goals.length;
+                const completedGoals = this.goals.filter(goal => goal.current >= goal.target).length;
+                
+                let totalProgress = 0;
+                this.goals.forEach(goal => {
+                    totalProgress += goal.getProgress();
+                });
+                
+                const averageProgress = totalGoals > 0 ? (totalProgress / totalGoals) : 0;
+                
+                document.getElementById('totalGoals').textContent = totalGoals;
+                document.getElementById('completedGoals').textContent = completedGoals;
+                document.getElementById('averageProgress').textContent = `${averageProgress.toFixed(1)}%`;
+            }
+        };
+
+        // تهيئة التطبيق عند تحميل الصفحة
+        document.addEventListener('DOMContentLoaded', function() {
+            GoalsApp.init();
+        });
+    </script>
+</body>
+</html>
